@@ -9,7 +9,6 @@ import connectDB from './src/config/db';
 import { userRouter } from './src/routes/userRoute';
 import { authRouter } from './src/routes/authRoute';
 import productRouter from './src/routes/productRoutes';
-import ratingRoutes from "./src/routes/ratingRoutes";
 
 import { setupSwagger } from "./src/config/swaggerConfig";
 
@@ -27,8 +26,6 @@ setupSwagger(app);
 app.use('/v1/user', userRouter);
 app.use('/v1/auth', authRouter);
 app.use("/v1/products", productRouter);
-app.use("/v1/ratings", ratingRoutes);
-
 
 // Health Check Route
 app.get('/', (req: express.Request, res: express.Response) => {
