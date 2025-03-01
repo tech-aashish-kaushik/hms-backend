@@ -1,4 +1,4 @@
-import { Document } from "mongoose";
+import { Document, Types } from "mongoose";
 import { RepeatType } from "../constants/enum";
 
 export interface IRepeatDetails {
@@ -8,6 +8,7 @@ export interface IRepeatDetails {
 }
 
 export interface IEvent extends Document {
+    userId?: Types.ObjectId
     title: string;
     description?: string;
     date?: Date;
@@ -18,4 +19,14 @@ export interface IEvent extends Document {
     tags?: string[]
     createdAt?: Date;
     updatedAt?: Date;
+}
+
+export interface GetEventsQuery {
+    userId?: Types.ObjectId
+    startDate?: string;
+    endDate?: string;
+    category?: string;
+    search?: string;
+    page?: number;
+    limit?: number;
 }

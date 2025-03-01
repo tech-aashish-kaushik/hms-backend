@@ -1,6 +1,7 @@
-import { Date, Schema, model } from 'mongoose';
+import { Date, Schema, model, Types } from 'mongoose';
 
 interface IUserSchema {
+  _id: Types.ObjectId
   title: string;
   firstName: string;
   lastName: string;

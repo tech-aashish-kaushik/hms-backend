@@ -4,13 +4,16 @@ import { RepeatType, RepeatUnits } from "../constants/enum";
 
 const eventSchema = new Schema<IEvent>(
     {
+        userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
         title: { type: String, required: true, trim: true },
         description: { type: String, trim: true, default: "" },
         date: {
             type: Date,
             validate: {
-                validator: (value: Date) => value > new Date(),
-                message: "Date must be in the future"
+                validator: function (value: Date | null) {
+                    return value === null || value > new Date();
+                },
+                message: "Date must be in the future",
             },
             default: null,
         },
