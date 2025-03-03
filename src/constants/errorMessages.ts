@@ -5,7 +5,8 @@ export interface IErrorMessages {
     INTERNAL_SERVER_ERROR: string,
     ACCESS_TOKEN_REQUIRED: string,
     INVALID_TOKEN: string,
-    AUTH_FAIL: string
+    AUTH_FAIL: string,
+    NOT_FOUND: string,
 }
 
 export const ERROR_MESSAGES: IErrorMessages = {
@@ -15,5 +16,6 @@ export const ERROR_MESSAGES: IErrorMessages = {
     INTERNAL_SERVER_ERROR: "Internal server error",
     ACCESS_TOKEN_REQUIRED: "Access token is required",
     INVALID_TOKEN: "Invalid or expired token",
-    AUTH_FAIL: "Authentication failed"
+    AUTH_FAIL: "Authentication failed",
+    NOT_FOUND: "Not Found",
 };

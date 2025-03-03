@@ -16,7 +16,7 @@ export const validateParamsId = (req: Request, res: Response, next: NextFunction
                 error: [
                     {
                         "field": "id",
-                        "message": "Invalid product ID format"
+                        "message": "Invalid ID format"
                     }
                 ]
             },

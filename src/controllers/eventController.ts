@@ -1,6 +1,7 @@
 import { Response } from "express";
 import {
     createEvent,
+    deleteEvent,
     getEvent,
 } from "../services/eventService";
 import { IEvent } from "../interfaces/eventInterface";
@@ -33,6 +34,25 @@ export const getEventController = async (req: RequestWithUser, res: Response): P
     } catch (error) {
         logger.error(`getEvent:controller:error - ${error}`);
         console.error(error);
+        REQUEST_FAILURE(res, { error: ERROR_MESSAGES.INTERNAL_SERVER_ERROR }, HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR)
+    }
+};
+
+export const deleteEventController = async (req: RequestWithUser, res: Response) => {
+    logger.info('deleteEvent:controller:invoke');
+    try {
+        const userId = req?.user?._id;
+        const eventId = req.params.eventId;
+
+        const result = await deleteEvent(eventId, userId);
+
+        if (!result) {
+            return REQUEST_FAILURE(res, { error: ERROR_MESSAGES.NOT_FOUND }, HTTP_STATUS_CODES.NOT_FOUND)
+        }
+
+        REQUEST_SUCCESS(res, { data: { message: "Event deleted successfully" }, error: "" }, HTTP_STATUS_CODES.OK)
+    } catch (error) {
+        logger.error(`deleteEvent:controller:error - ${error}`);
         REQUEST_FAILURE(res, { error: ERROR_MESSAGES.INTERNAL_SERVER_ERROR }, HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR)
     }
 };

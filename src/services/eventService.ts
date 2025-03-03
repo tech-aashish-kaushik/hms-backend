@@ -1,5 +1,6 @@
 import { Event } from "../models/event.model";
 import { IEvent, GetEventsQuery } from "../interfaces/eventInterface";
+import mongoose, { Types } from "mongoose";
 
 export const createEvent = async (eventData: IEvent): Promise<IEvent> => {
     const event = await Event.create(eventData);
@@ -21,4 +22,11 @@ export const getEvent = async (query: GetEventsQuery): Promise<IEvent[]> => {
         .limit(limit);
 
     return events;
+};
+
+
+export const deleteEvent = async (eventId: string, userId: Types.ObjectId | undefined) => {
+    const objectId = new mongoose.Types.ObjectId(eventId);
+    const deletedEvent = await Event.findOneAndDelete({ _id: objectId, userId });
+    return deletedEvent;
 };

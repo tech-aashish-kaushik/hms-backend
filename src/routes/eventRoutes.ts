@@ -5,6 +5,7 @@ import {
 } from "../controllers/eventController";
 import { validateToken } from "../middlewares/authMiddlewares";
 import { validateCreateEvent } from "../middlewares/eventMiddleware";
+import { validateParamsId } from "../middlewares/commonValidation";
 
 const router = express.Router();
 
@@ -241,6 +242,52 @@ router.post("/",
 router.get("/",
     validateToken,
     // validateCreateEvent,
+    getEventController
+);
+
+/**
+ * @swagger
+ * /v1/events/{eventId}:
+ *   delete:
+ *     summary: Delete an event
+ *     tags: [Events]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: eventId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The ID of the event to delete
+ *     responses:
+ *       200:
+ *         description: Event deleted successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: "Event deleted successfully"
+ *       400:
+ *         $ref: "#/components/responses/ValidationError"
+ *       401:
+ *         $ref: "#/components/responses/UnauthorizedError"
+ *       403:
+ *         description: Forbidden - You don't have permission to delete this event
+ *       404:
+ *         description: Event not found
+ *       500:
+ *         description: Internal Server Error
+ */
+router.delete("/:id",
+    validateParamsId,
+    validateToken,
     getEventController
 );
 
