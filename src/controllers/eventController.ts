@@ -42,7 +42,7 @@ export const deleteEventController = async (req: RequestWithUser, res: Response)
     logger.info('deleteEvent:controller:invoke');
     try {
         const userId = req?.user?._id;
-        const eventId = req.params.eventId;
+        const eventId = req.params.id;
 
         const result = await deleteEvent(eventId, userId);
 

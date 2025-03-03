@@ -1,7 +1,8 @@
 import express from "express";
 import {
     createEventController,
-    getEventController
+    getEventController,
+    deleteEventController
 } from "../controllers/eventController";
 import { validateToken } from "../middlewares/authMiddlewares";
 import { validateCreateEvent } from "../middlewares/eventMiddleware";
@@ -288,7 +289,7 @@ router.get("/",
 router.delete("/:id",
     validateParamsId,
     validateToken,
-    getEventController
+    deleteEventController
 );
 
 export default router;
