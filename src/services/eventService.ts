@@ -24,6 +24,11 @@ export const getEvent = async (query: GetEventsQuery): Promise<IEvent[]> => {
     return events;
 };
 
+export const getEventById = async (eventId: string, userId: Types.ObjectId | undefined): Promise<IEvent | null> => {
+    const objectId = new mongoose.Types.ObjectId(eventId);
+    return await Event.findOne({ _id: objectId, userId });
+};
+
 
 export const deleteEvent = async (eventId: string, userId: Types.ObjectId | undefined) => {
     const objectId = new mongoose.Types.ObjectId(eventId);

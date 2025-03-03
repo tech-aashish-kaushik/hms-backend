@@ -3,6 +3,7 @@ import {
     createEvent,
     deleteEvent,
     getEvent,
+    getEventById,
 } from "../services/eventService";
 import { IEvent } from "../interfaces/eventInterface";
 import { RequestWithUser } from "../interfaces/request";
@@ -33,6 +34,20 @@ export const getEventController = async (req: RequestWithUser, res: Response): P
         REQUEST_SUCCESS(res, { data: event }, HTTP_STATUS_CODES.OK)
     } catch (error) {
         logger.error(`getEvent:controller:error - ${error}`);
+        console.error(error);
+        REQUEST_FAILURE(res, { error: ERROR_MESSAGES.INTERNAL_SERVER_ERROR }, HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR)
+    }
+};
+
+export const getEventByIdController = async (req: RequestWithUser, res: Response): Promise<void> => {
+    logger.info('getEventById:controller:invoke');
+    try {
+        const { user } = req;
+        const { eventId } = req.params;
+        const event = await getEventById(eventId, user?._id);
+        REQUEST_SUCCESS(res, { data: event }, HTTP_STATUS_CODES.OK)
+    } catch (error) {
+        logger.error(`getEventById:controller:error - ${error}`);
         console.error(error);
         REQUEST_FAILURE(res, { error: ERROR_MESSAGES.INTERNAL_SERVER_ERROR }, HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR)
     }
