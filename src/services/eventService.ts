@@ -16,7 +16,7 @@ export const getEvent = async (query: GetEventsQuery): Promise<IEvent[]> => {
     if (category) filter.category = category;
     if (search) filter.title = { $regex: search, $options: "i" };
 
-    const events = await Event.find(filter)
+    const events = await Event.find(filter, { __v: 0 })
         .sort({ date: 1 })
         .skip((page - 1) * limit)
         .limit(limit);

@@ -58,12 +58,6 @@ const refreshToken = async (req: Request, res: Response): Promise<void> => {
   try {
     const { refreshToken } = req.body ?? {};
 
-    // Validate if refreshToken is provided
-    if (!refreshToken) {
-      return REQUEST_FAILURE(res, { error: 'Refresh token is required' }, HTTP_STATUS_CODES.BAD_REQUEST);
-    }
-
-    // Call service to refresh token
     const result = await refreshUserToken(refreshToken);
 
     if (!result.success) {

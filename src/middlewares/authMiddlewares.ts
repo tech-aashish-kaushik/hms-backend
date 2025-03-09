@@ -105,8 +105,11 @@ const validateToken = async (req: RequestWithUser, res: Response, next: NextFunc
 
     req.user = user;
     next();
-  } catch (error) {
-    logger.error(`validateToken::error`);
+  } catch (error: any) {
+    logger.error(`validateToken::error`, error);
+    if (error?.name === 'TokenExpiredError') {
+      return REQUEST_FAILURE(res, { error: ERROR_MESSAGES.TOKEN_EXPIRED }, HTTP_STATUS_CODES.UNAUTHORIZED);
+    }
     return REQUEST_FAILURE(res, { error: ERROR_MESSAGES.AUTH_FAIL }, HTTP_STATUS_CODES.FORBIDDEN);
   }
 };

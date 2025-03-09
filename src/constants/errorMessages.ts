@@ -7,6 +7,7 @@ export interface IErrorMessages {
     INVALID_TOKEN: string,
     AUTH_FAIL: string,
     NOT_FOUND: string,
+    TOKEN_EXPIRED: string,
 }
 
 export const ERROR_MESSAGES: IErrorMessages = {
@@ -18,4 +19,5 @@ export const ERROR_MESSAGES: IErrorMessages = {
     INVALID_TOKEN: "Invalid or expired token",
     AUTH_FAIL: "Authentication failed",
     NOT_FOUND: "Not Found",
+    TOKEN_EXPIRED: "Token expired",
 };
