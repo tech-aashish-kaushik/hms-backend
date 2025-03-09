@@ -35,3 +35,13 @@ export const deleteEvent = async (eventId: string, userId: Types.ObjectId | unde
     const deletedEvent = await Event.findOneAndDelete({ _id: objectId, userId });
     return deletedEvent;
 };
+
+export const updateEvent = async (eventId: string, userId: Types.ObjectId | undefined, updateData: Partial<IEvent>): Promise<IEvent | null> => {
+    const objectId = new mongoose.Types.ObjectId(eventId);
+    const updatedEvent = await Event.findOneAndUpdate(
+        { _id: objectId, userId },
+        { $set: updateData },
+        { new: true }
+    );
+    return updatedEvent;
+};

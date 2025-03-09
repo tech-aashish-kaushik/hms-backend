@@ -4,6 +4,7 @@ import {
     deleteEvent,
     getEvent,
     getEventById,
+    updateEvent
 } from "../services/eventService";
 import { IEvent } from "../interfaces/eventInterface";
 import { RequestWithUser } from "../interfaces/request";
@@ -69,5 +70,25 @@ export const deleteEventController = async (req: RequestWithUser, res: Response)
     } catch (error) {
         logger.error(`deleteEvent:controller:error - ${error}`);
         REQUEST_FAILURE(res, { error: ERROR_MESSAGES.INTERNAL_SERVER_ERROR }, HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR)
+    }
+};
+
+export const updateEventController = async (req: RequestWithUser, res: Response): Promise<void> => {
+    logger.info('updateEvent:controller:invoke');
+    try {
+        const userId = req?.user?._id;
+        const eventId = req.params.id;
+        const eventData: IEvent = req.body;
+
+        const updatedEvent = await updateEvent(eventId, userId, eventData);
+
+        if (!updatedEvent) {
+            return REQUEST_FAILURE(res, { error: ERROR_MESSAGES.NOT_FOUND }, HTTP_STATUS_CODES.NOT_FOUND);
+        }
+
+        REQUEST_SUCCESS(res, { data: updatedEvent }, HTTP_STATUS_CODES.OK);
+    } catch (error) {
+        logger.error(`updateEvent:controller:error - ${error}`);
+        REQUEST_FAILURE(res, { error: ERROR_MESSAGES.INTERNAL_SERVER_ERROR }, HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR);
     }
 };
