@@ -5,15 +5,14 @@ import { createUser } from '../services/userService';
 import { authenticateUser, refreshUserToken } from '../services/authService';
 import { HTTP_STATUS_CODES } from '../constants/httpStatusCodes';
 import { ERROR_MESSAGES } from '../constants/errorMessages';
+import { sendWelcomeEmail } from '../services/emailService';
 
 const signup = async (req: Request, res: Response): Promise<void> => {
   logger.info('signup:controller:invoke');
   try {
     const { title, firstName, lastName, gender, email, phone, password } = req.body ?? {};
-
-    // Call the service to create the user
     const result = await createUser({ title, firstName, lastName, gender, email, phone, password });
-
+    sendWelcomeEmail(email, firstName)
     REQUEST_SUCCESS(res, { data: { message: 'User created successfully', userId: result.userId } }, HTTP_STATUS_CODES.CREATED);
   } catch (error) {
     logger.error(`signup:controller:error - ${error}`);
@@ -26,12 +25,6 @@ const login = async (req: Request, res: Response): Promise<void> => {
   try {
     const { email, password } = req.body ?? {};
 
-    // Validate required fields
-    if (!email || !password) {
-      return REQUEST_FAILURE(res, { error: 'Email and password are required' }, HTTP_STATUS_CODES.BAD_REQUEST);
-    }
-
-    // Call authentication service
     const result = await authenticateUser(email, password);
 
     if (!result.success) {
