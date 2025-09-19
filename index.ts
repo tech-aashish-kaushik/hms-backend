@@ -1,7 +1,8 @@
 import express from 'express';
 import dotenv from 'dotenv';
 dotenv.config();
-
+import cron from "node-cron";
+import axios from "axios";
 import cors from 'cors';
 import mongoose from 'mongoose';
 import logger from './src/config/logger';
@@ -10,9 +11,7 @@ import { userRouter } from './src/routes/userRoute';
 import { authRouter } from './src/routes/authRoute';
 import productRouter from './src/routes/productRoutes';
 import eventRouter from './src/routes/eventRoutes';
-
 import { setupSwagger } from "./src/config/swaggerConfig";
-
 
 const app: express.Application = express();
 const PORT = process.env.PORT || 5001;
@@ -22,6 +21,15 @@ app.use(cors());
 app.use(express.json());
 
 setupSwagger(app);
+
+// cron.schedule("*/2 * * * *", async () => {
+//     try {
+//         console.log("Triggering reminder emails...");
+//         await axios.post("http://localhost:5001/v1/events/send-reminders");
+//     } catch (error) {
+//         console.error("Error triggering reminders:", error);
+//     }
+// });
 
 // Routes
 app.use('/v1/user', userRouter);

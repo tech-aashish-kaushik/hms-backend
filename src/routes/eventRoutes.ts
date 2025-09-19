@@ -4,7 +4,8 @@ import {
     getEventController,
     deleteEventController,
     getEventByIdController,
-    updateEventController
+    updateEventController,
+    sendEventReminderController,
 } from "../controllers/eventController";
 import { validateToken } from "../middlewares/authMiddlewares";
 import { validateCreateEvent } from "../middlewares/eventMiddleware";
@@ -517,5 +518,7 @@ router.put("/:id",
     validateCreateEvent,
     updateEventController
 );
+
+router.post("/send-reminders", sendEventReminderController);
 
 export default router;

@@ -34,7 +34,9 @@ export const sendWelcomeEmail = async (userEmail: string, username: string) => {
     const templatePath = path.join(__dirname, '../templates/welcomeEmail.html');
     console.log('templatePath:', templatePath);
     let htmlTemplate = fs.readFileSync(templatePath, 'utf-8');
-    htmlTemplate = htmlTemplate.replace('{{username}}', username);
+
+    // Replace placeholders globally
+    htmlTemplate = htmlTemplate.replace(/{{username}}/g, username);
 
     const emailOptions = {
         to: userEmail,
@@ -48,5 +50,38 @@ export const sendWelcomeEmail = async (userEmail: string, username: string) => {
         console.log('Welcome email sent successfully');
     } catch (error) {
         console.error('Error sending welcome email:', error);
+    }
+};
+
+export const sendReminderEmail = async (
+    userEmail: string,
+    username: string,
+    eventTitle: string,
+    eventTime: Date
+) => {
+    const templatePath = path.join(__dirname, '../templates/reminderEmail.html');
+    console.log("aashish templatePath", templatePath);
+
+    let htmlTemplate = fs.readFileSync(templatePath, "utf-8");
+
+    // Replace placeholders globally
+    htmlTemplate = htmlTemplate
+        .replace(/{{username}}/g, username)
+        .replace(/{{eventTitle}}/g, eventTitle)
+        .replace(/{{eventTime}}/g, eventTime.toLocaleString());
+
+    const emailOptions = {
+        to: userEmail,
+        subject: `Reminder: ${eventTitle} is starting soon!`,
+        text: `Hi ${username}, your event "${eventTitle}" is scheduled for ${eventTime.toLocaleString()}.`,
+        html: htmlTemplate,
+    };
+
+    try {
+        await sendEmail(emailOptions);
+        console.log("Reminder email sent successfully");
+    } catch (error) {
+        console.error("Error sending reminder email:", error);
+        throw new Error("Error sending reminder email");
     }
 };
