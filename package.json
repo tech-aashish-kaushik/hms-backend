@@ -1,0 +1,44 @@
+{
+  "name": "kaushikEnterprises",
+  "version": "1.0.0",
+  "description": "this will be iconic project soon",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "npm run build && node dist/index.js",
+    "dev": "tsc --watch --preserveWatchOutput && node dist/index.js",
+    "prod": "npm run build && node dist/index.js",
+    "prod:pm2": "npm run build && pm2 start dist/index.js --name kaushik-enterprise-BE"
+  },
+  "author": "er.aashish.kaushik@gmail.com",
+  "license": "ISC",
+  "dependencies": {
+    "@types/jsonwebtoken": "^9.0.5",
+    "axios": "^1.8.4",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.2",
+    "express": "^4.18.2",
+    "joi": "^17.12.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.1.0",
+    "node-cron": "^3.0.3",
+    "nodemailer": "^6.10.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
+    "winston": "^3.11.0"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/joi": "^17.2.3",
+    "@types/mongoose": "^5.11.97",
+    "@types/node-cron": "^3.0.11",
+    "@types/nodemailer": "^6.4.17",
+    "@types/swagger-jsdoc": "^6.0.4",
+    "@types/swagger-ui-express": "^4.1.7",
+    "@types/winston": "^2.4.4",
+    "typescript": "^5.3.3"
+  }
+}
